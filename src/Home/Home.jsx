@@ -10,11 +10,12 @@ export default function Home() {
   const [searchParams]=useSearchParams();
   const [to,setTo]=useState(searchParams.get("to"))
   const [from ,setFrom]=useState(searchParams.get("from"))
+  const [g,setG]=useState(searchParams.get("g"))
+  const [t,setT]=useState(searchParams.get('t'))
   
   
- 
-  const g=searchParams.get("g")>greeting.length?0:searchParams.get("g")||0
-  const t=searchParams.get('t')
+
+
   return (
     <div>
     <div className={`main-container ${theme[t]}`}>
@@ -27,11 +28,45 @@ export default function Home() {
       </div>
     
    </div>
-   <div className='text-to-customize'>Do you want to create your own Diwali Greeting? Customize it here 👇</div>
-   <input type='text' placeholder='name of your friend' onChange={(e)=>{
-
-   }} />
+   <div className='text-to-customize'>Do you want to create your own New Year  Greeting? Customize it here 👇</div>
+   <div className="url" onClick={()=>{
+    const url=`${import.meta.env.VITE_BASE_URL}/?to=${to}&from=${from}&g=${g}&t=${t}`
+    navigator.clipboard.writeText(url);
+    alert(`copied ${url}`)
+   }}>
+    {`${import.meta.env.VITE_BASE_URL}/?to=${to}&from=${from}&g=${g}&t=${t}`}
    </div>
+   <div className='input-container'>
+   <input className='input-field' type='text' placeholder='name of your friend' onChange={(e)=>{
+     setTo(e.target.value)}} />
+   <input className='input-field' type='text' placeholder='name of your' onChange={(e)=>{
+     setFrom(e.target.value)}} />
+     <select value={g} onChange={(e)=>{
+      setG(e.target.value)
+     }} className='select-field'>
+      <option value={0}>Greeting 1</option>
+      <option value={1}>Greeting 2</option>
+      <option value={2}>Greeting 3</option>
+      <option value={3}>Greeting 4</option>
+      <option value={4}>Greeting 5</option>
+
+     </select>
+
+     <select value={t} onChange={(e)=>{
+      setT(e.target.value)
+     }} className='select-field'>
+      <option value={0}>theme 1</option>
+      <option value={1}>theme 2</option>
+      <option value={2}>theme 3</option>
+      <option value={3}>theme 4</option>
+     
+
+     </select>
+
+     </div>
+
+   </div>
+   
   
 
   )
